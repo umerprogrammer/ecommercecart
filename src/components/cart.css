@@ -1,0 +1,32 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.mycart{
+    width: 300px;
+    height: 350px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.cartimage{
+    height: 230px;
+    /* border-bottom: 1px solid #ccc ; */
+}
+ .cartimage img{
+  height: 100% !important;
+}
+
+.carttitle{
+    display: inline-block;    
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 40ch;
+    white-space: nowrap;
+}
+
+.btnAddCart{
+    background-color: #d14141 !important;
+    color: #ffffff !important;
+}
