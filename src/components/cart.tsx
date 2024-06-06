@@ -7,7 +7,7 @@ import { Rating } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import InfoIcon from '@mui/icons-material/Info';
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = (props: {
     title: string,
@@ -39,8 +39,8 @@ const Cart = (props: {
                         <button type="button" className='btn btn-sm btn-dark h-100'><InfoIcon fontSize='small' /></button>
                     </div>
                     <div className="col-md-10 ms-3 p-0  ">
-                        <button type="button" onClick={()=>{
-                          navigate("/cartdetail");
+                        <button type="button" onClick={() => {
+                            navigate("/cartlist");
                         }} className='btn btn-sm btn-outline-dark h-100 w-100'>Add To Cart</button></div>
                 </div>
             </div>

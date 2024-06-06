@@ -1,71 +1,157 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 
-export default function CartDetail(props:{
-    category:string;
-    title:string;
-    price:number,
-    discount:number,
-    quantity:number,
-    stockQuantity:number,
-    image:any,
+export default function CartDetail(props: {
+    itemId: number;
+    category: string;
+    title: string;
+    price: number,
+    discount: number,
+    quantity: number,
+    stockQuantity: number,
+    image: any,
+    getSubTotal?: any,
 }) {
 
-    const {category,title,price,discount,quantity,stockQuantity,image} = props;
-    return <>
+    const { itemId, category, title, price, discount, quantity, stockQuantity, image, getSubTotal } = props;
 
-            <div className="row mt-4">
-                <div className="col-md-8">
-                    <div className='rounded-1 px-2 '>
-                        <div className='border rounded-1 p-2 d-flex justify-content-between'>
-                            <div className='p-2' >
-                                <input type="checkbox" />
-                                <span className='px-2'>Select All</span>
-                            </div>
-                            <button type="button" className='btn btn-dark rounded-pill fs-6'>Delete All</button>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-md-4">
+
+    let [amount, setAmount] = useState(0);
+
+    let [inputQty, setInputQty] = useState(1);
+    let [discountPrice, setDiscountPrice] = useState((price - discount));
+    let [itemAmount, setItemAmount] = useState((price - discount));
+    let cartData = {
+        itemId: itemId,
+        itemCategory: category,
+        itemTitle: title,
+        itemPrice: price,
+        itemDiscount: discount,
+        itemAmount: itemAmount,
+
+    };
+    let [cart, setCart] = useState(cartData);
+    let [data, setData] = useState<any>([]);
+    let [select, setSelect] = useState(false);
+    let [selectAmount, setSelectAmount] = useState(0);
+    let itemQty = 0;
+    let totalAmount = 0;
+    // let [inputQty, setInputQty] = useState({
+    //     quantity: 1,
+    //     price: price,
+    //     discountPrice:(price - discount),
+    //     itemAmount:0,
+
+    // });
+
+
+
+    // Decrease Item Quantity
+    const incrementQty = () => {
+        itemQty = (inputQty + 1);
+        setInputQty((inputQty + 1));
+        console.log(itemQty, 'Qty');
+        calculateItem(itemQty);
+    }
+
+    // Increase Item Quantity
+    const decrementQty = () => {
+        itemQty = inputQty > 1 ? (inputQty - 1) : 1;
+        setInputQty(itemQty);
+        calculateItem(itemQty);
+    }
+
+    // Item Calculation
+    const calculateItem = (qty: number) => {
+
+        totalAmount = qty * discountPrice;
+        setItemAmount(qty * discountPrice);
+    }
+
+    // get only Selected Item Amount
+    const addCart = (Id: number) => {
+        console.log(Id, "Add Cart ");
+        if (data == null || data == undefined ||data.length == 0 ) {
+            //setCart(cart);
+            data.push({ ...cart })
+            setData([...data]);
+        } else {
+            data.map((x: any, i: any) => {
+                console.log(x.itemId, "X Item Id ");
+                if (x.itemId == Id) {
+                    console.log(x, "Match");
+
+                    data.slice(i, 1);
+                    setData([...data]);
+                }
+                else {
+                    console.log(x.ItemId, "Not.Match");
+            //        setCart(cart);
+                    data.push({ ...cart })
+                    setData([...data]);
+                }
+            })
+        }
+        console.log(data, "Data Array ");
+    }
+
+
+    // calculateItem();
+    return <>
+        <div className="row">
+            <div className="col-md-12">
+                <div className='rounded-1 px-2 '>
                     <div className='border rounded-1 p-2'>
-                        <h5 className='fw-bold p-1'>Order Summary</h5>
-                    </div>
-                </div>
-            </div>
-            <div className="row mt-4">
-                <div className="col-md-8">
-                    <div className='rounded-1 px-2 '>
-                        <div className='border rounded-1 p-2'>
-                            <div className="row">
-                                <div className='col-md-8 d-flex gap-2'>
-                                    <input type="checkbox" />
-                                    <img src={image} alt="" className='border rounded-2' style={{ width: "100px", height: "100px" }} />
-                                    <div className='d-flex flex-column gap-2'>
-                                        <span>{category}</span>
-                                        <span>{title}</span>
-                                        <div className='d-flex gap-2 align-items-center'>
-                                            <span>Color</span>
-                                            <select name="" id="" className='form-select form-select-sm' style={{ width: "120px" }}>
-                                                <option value="0">Red</option>
-                                                <option value="0">Wite</option>
-                                                <option value="0">Blue</option>
-                                            </select>
-                                        </div>
+                        <div className="row">
+                            <div className='col-md-8 d-flex gap-2'>
+                                <input type="checkbox" onChange={(e) => {
+                                    cart.itemId = itemId
+                                    addCart(cart.itemId);
+                                    //   setSelect(e.target.checked);
+                                    //let isSelect = e.target.checked;
+                                    //console.log(itemAmount);
+                                    //    if(isSelect == true){
+                                    //        setAmount((amount + itemAmount));
+                                    //        console.log(amount,"add amount");
+                                    //    }
+                                    //     console.log(amount,"item Amount");
+
+                                }} />
+                                <img src={image} alt="" className='border rounded-2' style={{ width: "100px", height: "100px" }} />
+                                <div className='d-flex flex-column gap-2'>
+                                    <div>
+                                        <span className='fs-12 bg-light border rounded-pill p-1 px-4 text-wrap'>{category}</span></div>
+                                    <span className='fs-13 ' >{title}</span>
+                                    <div className='d-flex gap-2 align-items-center'>
+                                        <span className='fs-13' >Color</span>
+                                        <select name="" id="" className='form-select form-select-sm' style={{ width: "120px" }}>
+                                            <option value="0">Red</option>
+                                            <option value="0">Wite</option>
+                                            <option value="0">Blue</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div className="col-md-4  d-flex flex-column align-items-end justify-content-end gap-2">
-                                    <span><s>${price}</s></span>
-                                    <span className='fw-bold fs-5'>${price - discount}</span>
-                                    <div className='rounded-2'  style={{ width: "150px",height:"30px" }}>
-                                        <div className='row m-0 rounded-2 d-flex align-items-center '>
-                                            <div className="col-md-2 p-0">
-                                        <button type="button" className='btn btn-light p-0 m-0  w-100 rounded-0 rounded-start-2'><span className='fw-bold'>-</span></button></div>
-                                        <div className="col-md-8 p-0">
-                                        <input type="text" id="quantity" value={quantity} className='w-100 text-center border ' /></div>
+                            </div>
+                            <div className="col-md-4 d-flex flex-column align-items-end justify-content-end gap-2">
+                                <div className='d-flex gap-2'>
+                                    <span className='fs-14'><s>${cart.itemCategory}</s></span>
+                                    <span className='fw-bold fs-14'> ${cart.itemDiscount.toFixed(2)} </span></div>
+                                <span className='fw-bold fs-14'> ${cart.itemAmount.toFixed(2)} </span>
+                                <div className='rounded-2' style={{ width: "150px", height: "30px" }}>
+                                    <div className='row m-0 rounded-2 d-flex align-items-center border '>
                                         <div className="col-md-2 p-0">
-                                        <button type="button" className='btn btn-light p-0 m-0  w-100 rounded-0 rounded-end-2'><span className='fw-bold'>+</span></button></div>
-                                        </div>
+                                            <button type="button" className='btn btn-light p-0 m-0  w-100 rounded-0 rounded-start-2' onClick={() => {
+                                                decrementQty();
+                                            }}><span className='fw-bold'>-</span></button></div>
+                                        <div className="col-md-8 p-0">
+                                            <input type="text" id="quantity" value={inputQty} onChange={(e) => {
+                                                setInputQty(Number(e.target.value));
+                                            }} className='w-100 text-center border-0  fs-14' /></div>
+                                        <div className="col-md-2 p-0">
+                                            <button type="button" className='btn btn-light p-0 m-0  w-100 rounded-0 rounded-end-2' onClick={() => {
+                                                incrementQty();
+                                            }}><span className='fw-bold'>+</span></button></div>
                                     </div>
                                 </div>
                             </div>
@@ -73,6 +159,7 @@ export default function CartDetail(props:{
                     </div>
                 </div>
             </div>
-        
+        </div>
+
     </>
 }

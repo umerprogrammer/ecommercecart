@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import AppRouter from './config/router';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import  './css/style.css';
 
 function App() {
   return (
