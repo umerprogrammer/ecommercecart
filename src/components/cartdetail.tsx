@@ -32,7 +32,7 @@ export default function CartDetail(props: {
 
     };
     let [cart, setCart] = useState(cartData);
-    let [data, setData] = useState<any>([]);
+    const [data, setData] = useState<any>([]);
     let [select, setSelect] = useState(false);
     let [selectAmount, setSelectAmount] = useState(0);
     let itemQty = 0;
@@ -71,28 +71,41 @@ export default function CartDetail(props: {
 
     // get only Selected Item Amount
     const addCart = (Id: number) => {
-        console.log(Id, "Add Cart ");
-        if (data == null || data == undefined ||data.length == 0 ) {
-            //setCart(cart);
-            data.push({ ...cart })
+        console.log(data.length, "Data length");
+        if (data.length == 0) {
+            console.log(data.length, "Add  Cart");
+            data.push({ ...cart });
             setData([...data]);
-        } else {
-            data.map((x: any, i: any) => {
-                console.log(x.itemId, "X Item Id ");
-                if (x.itemId == Id) {
-                    console.log(x, "Match");
 
-                    data.slice(i, 1);
-                    setData([...data]);
-                }
-                else {
-                    console.log(x.ItemId, "Not.Match");
-            //        setCart(cart);
-                    data.push({ ...cart })
-                    setData([...data]);
-                }
-            })
+        } else {
+            console.log(data.length, "delete  Cart");
+            data.map((x: any, i: any) => {
+                if(x.itemId == Id)
+                    data.splice(i,1);
+            });
         }
+        // if (data.length == 0 ) {
+        //     console.log(data, "Add Cart 2");
+        //     //setCart(cart);
+        //     data.push({ ...cart })
+        //     setData([...data]);
+        // } else {
+        //     data.map((x: any, i: any) => {
+        //         console.log(x.itemId, "X Item Id ");
+        //         if (x.itemId == Id) {
+        //             console.log(x, "Match");
+
+        //             data.splice(i, 1);
+        //             setData([...data]);
+        //         }
+        //         else {
+        //             console.log(x.ItemId, "Not.Match");
+        //     //        setCart(cart);
+        //             data.push({ ...cart })
+        //             setData([...data]);
+        //         }
+        //     })
+        // }
         console.log(data, "Data Array ");
     }
 
@@ -105,7 +118,7 @@ export default function CartDetail(props: {
                     <div className='border rounded-1 p-2'>
                         <div className="row">
                             <div className='col-md-8 d-flex gap-2'>
-                                <input type="checkbox" onChange={(e) => {
+                                <input type="checkbox" onChange={() => {
                                     cart.itemId = itemId
                                     addCart(cart.itemId);
                                     //   setSelect(e.target.checked);
