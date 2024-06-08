@@ -6,10 +6,8 @@ import axios from 'axios';
 
 const ProductCart = () => {
 
-
     let [data, setData] = useState<any>([]);
     let baseUrl = "https://fakestoreapi.com/products";
-
 
     //*****************  CALLING API *****************
     // const getData = () => {
@@ -34,7 +32,7 @@ const ProductCart = () => {
                 <div className="row">
                     {
                         data.map((x: any, i: any) => {
-                            return <div className="col-md-3"> <Cart title={x.title} description={x.description} image={x.image} price={x.price} /></div>
+                            return <div className="col-md-3"> <Cart key={i} category={x.category} title={x.title} description={x.description} image={x.image} price={x.price} /></div>
                         })
                     }
                 </div>

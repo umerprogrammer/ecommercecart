@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { Delete } from '@mui/icons-material';
 
 export default function CartDetail(props: {
     itemId: number;
@@ -20,31 +20,20 @@ export default function CartDetail(props: {
     let [amount, setAmount] = useState(0);
 
     let [inputQty, setInputQty] = useState(1);
-    let [discountPrice, setDiscountPrice] = useState((price - discount));
-    let [itemAmount, setItemAmount] = useState((price - discount));
+     let [itemAmount, setItemAmount] = useState((price - discount));
     let cartData = {
         itemId: itemId,
         itemCategory: category,
         itemTitle: title,
         itemPrice: price,
-        itemDiscount: discount,
+        itemDiscount: (price - discount),
         itemAmount: itemAmount,
 
     };
     let [cart, setCart] = useState(cartData);
     const [data, setData] = useState<any>([]);
-    let [select, setSelect] = useState(false);
-    let [selectAmount, setSelectAmount] = useState(0);
     let itemQty = 0;
     let totalAmount = 0;
-    // let [inputQty, setInputQty] = useState({
-    //     quantity: 1,
-    //     price: price,
-    //     discountPrice:(price - discount),
-    //     itemAmount:0,
-
-    // });
-
 
 
     // Decrease Item Quantity
@@ -65,50 +54,23 @@ export default function CartDetail(props: {
     // Item Calculation
     const calculateItem = (qty: number) => {
 
-        totalAmount = qty * discountPrice;
-        setItemAmount(qty * discountPrice);
+         totalAmount = qty *  cartData.itemDiscount;
+         setCart({...cart,itemAmount:(qty * cartData.itemDiscount)});
     }
 
     // get only Selected Item Amount
     const addCart = (Id: number) => {
         console.log(data.length, "Data length");
-        if (data.length == 0) {
             console.log(data.length, "Add  Cart");
             data.push({ ...cart });
             setData([...data]);
-
-        } else {
-            console.log(data.length, "delete  Cart");
-            data.map((x: any, i: any) => {
-                if(x.itemId == Id)
-                    data.splice(i,1);
-            });
-        }
-        // if (data.length == 0 ) {
-        //     console.log(data, "Add Cart 2");
-        //     //setCart(cart);
-        //     data.push({ ...cart })
-        //     setData([...data]);
-        // } else {
-        //     data.map((x: any, i: any) => {
-        //         console.log(x.itemId, "X Item Id ");
-        //         if (x.itemId == Id) {
-        //             console.log(x, "Match");
-
-        //             data.splice(i, 1);
-        //             setData([...data]);
-        //         }
-        //         else {
-        //             console.log(x.ItemId, "Not.Match");
-        //     //        setCart(cart);
-        //             data.push({ ...cart })
-        //             setData([...data]);
-        //         }
-        //     })
-        // }
         console.log(data, "Data Array ");
     }
 
+
+    function deleteCart(itemId:any) {
+    
+    }
 
     // calculateItem();
     return <>
@@ -121,15 +83,7 @@ export default function CartDetail(props: {
                                 <input type="checkbox" onChange={() => {
                                     cart.itemId = itemId
                                     addCart(cart.itemId);
-                                    //   setSelect(e.target.checked);
-                                    //let isSelect = e.target.checked;
-                                    //console.log(itemAmount);
-                                    //    if(isSelect == true){
-                                    //        setAmount((amount + itemAmount));
-                                    //        console.log(amount,"add amount");
-                                    //    }
-                                    //     console.log(amount,"item Amount");
-
+                                   
                                 }} />
                                 <img src={image} alt="" className='border rounded-2' style={{ width: "100px", height: "100px" }} />
                                 <div className='d-flex flex-column gap-2'>
@@ -148,10 +102,13 @@ export default function CartDetail(props: {
                             </div>
                             <div className="col-md-4 d-flex flex-column align-items-end justify-content-end gap-2">
                                 <div className='d-flex gap-2'>
-                                    <span className='fs-14'><s>${cart.itemCategory}</s></span>
+                                    <span className='fs-14'><s>${cart.itemPrice}</s></span>
                                     <span className='fw-bold fs-14'> ${cart.itemDiscount.toFixed(2)} </span></div>
                                 <span className='fw-bold fs-14'> ${cart.itemAmount.toFixed(2)} </span>
-                                <div className='rounded-2' style={{ width: "150px", height: "30px" }}>
+                                <div className='rounded-2 d-flex gap-2' style={{ width: "150px", height: "30px" }}>
+                                    <button className='btn btn-sm btn-outline-danger fs-10' onClick={()=>{
+                                        deleteCart(cart.itemId);
+                                    }}>Delete</button>
                                     <div className='row m-0 rounded-2 d-flex align-items-center border '>
                                         <div className="col-md-2 p-0">
                                             <button type="button" className='btn btn-light p-0 m-0  w-100 rounded-0 rounded-start-2' onClick={() => {

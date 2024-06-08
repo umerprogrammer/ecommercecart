@@ -4,6 +4,7 @@ import Home from '../pages/home';
 import ProductCart from '../components/productcart';
 import CartDetail from '../pages/cartlist';
 import CartList from '../pages/cartlist';
+import ItemDetail from '../pages/itemdetail';
 
 const AppRouter =()=>{
 
@@ -13,6 +14,7 @@ const AppRouter =()=>{
             <Route path='/' element={<Home/>}/>
             <Route path='/productcart' element={<ProductCart/>}/>
             <Route path='/cartlist' element={<CartList/>}/>
+            <Route path='/itemdetail' element={<ItemDetail/>}/>
         </Routes>
     </BrowserRouter>
     </>

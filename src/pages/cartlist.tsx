@@ -11,12 +11,15 @@ export default function CartList() {
 
     //*****************  CALLING API *****************
     useEffect(() => {
-        axios.get(baseUrl).then((res) => {
-            console.log(res.data, "Response Success");
-            setData(res.data);
-        }).catch((error) => {
-            console.log(error, "Response Error");
-        })
+
+        const jsonString = localStorage.getItem("cartItems");
+        if( jsonString != null || jsonString != undefined )
+           {
+               
+            data =  Object.assign([], JSON.parse(jsonString)); //<cartData[]>JSON.parse(JsonObject);
+            setData([...data]);
+           }
+       
     }, [])
 
     // get Subtotal From CartDetail Component
