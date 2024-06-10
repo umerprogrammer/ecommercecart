@@ -10,50 +10,58 @@ import InfoIcon from '@mui/icons-material/Info';
 import { useNavigate } from 'react-router-dom';
 
 const Cart = (props: {
-    category:string,
+    id: number,
+    category: string,
     title: string,
     description: string,
     price: number,
     image: any,
     isStock?: boolean,
 }) => {
-    const {category, title, description, price, image, isStock } = props;
+    const { id, category, title, description, price, image, isStock } = props;
     const navigate = useNavigate();
 
     let cartData = {
-        category:category,
+        id: id,
+        category: category,
         title: title,
         description: description,
         price: price,
         image: image,
         isStock: isStock,
+        quantity: 1
     }
 
-    let [cart , setCart] = useState(cartData);
-    let [carts , setCarts] = useState<any>([]);
+    let [cart, setCart] = useState(cartData);
+    let [carts, setCarts] = useState<any>([]);
     let cartstorage = [];
-    
-    const setLocalStorage = () =>{
+
+    const setLocalStorage = () => {
         const jsonString = localStorage.getItem("cartItems");
-         if( jsonString != null || jsonString != undefined )
-            {
-                
-                cartstorage =  Object.assign([], JSON.parse(jsonString)); //<cartData[]>JSON.parse(JsonObject);
-                carts = cartstorage
-            }
-               // setCart(cart);
+        if (jsonString != null || jsonString != undefined) {
+
+            cartstorage = Object.assign([], JSON.parse(jsonString)); //<cartData[]>JSON.parse(JsonObject);
+            carts = cartstorage
+            let cartFind = carts.find((x:any) => x.id == cart.id)
+            if(cartFind == undefined)
                 carts.push({...cart});
-                setCarts([...carts]);
-                console.log(carts,"Storage Cart");
-                localStorage.setItem("cartItems",JSON.stringify(carts));
-        
+            else
+                cart.quantity  += 1;
+        }else{
+            carts.push({ ...cart });
         }
- 
+        
+        setCarts([...carts]);
+        console.log(carts, "Storage Cart");
+        localStorage.setItem("cartItems", JSON.stringify(carts));
+
+    }
+
 
     return <>
         <div className="mycart mb-3 border shadow">
             <div className="cartimage w-100 p-2" >
-                <img src={cart.image} className='w-100' alt=""/>
+                <img src={cart.image} className='w-100' alt="" />
             </div>
             <div className="cartfooter d-flex flex-column justify-content-between">
                 <div className='px-2'>
@@ -68,8 +76,8 @@ const Cart = (props: {
                 </div>
                 <div className="mx-2 row mt-1">
                     <div className="col-md-1 p-0 ">
-                        <button type="button" className='btn btn-sm btn-dark h-100' onClick= {()=>{
-                            navigate("/itemdetail",{ state: { title: cart.title, description: cart.description } })
+                        <button type="button" className='btn btn-sm btn-dark h-100' onClick={() => {
+                            navigate("/itemdetail", { state: { title: cart.title, description: cart.description } })
                         }} ><InfoIcon fontSize='small' /></button>
                     </div>
                     <div className="col-md-10 ms-3 p-0  ">

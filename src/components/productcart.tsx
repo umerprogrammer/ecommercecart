@@ -32,7 +32,7 @@ const ProductCart = () => {
                 <div className="row">
                     {
                         data.map((x: any, i: any) => {
-                            return <div className="col-md-3"> <Cart key={i} category={x.category} title={x.title} description={x.description} image={x.image} price={x.price} /></div>
+                            return <div className="col-md-3"> <Cart key={i} id={x.id} category={x.category} title={x.title} description={x.description} image={x.image} price={x.price} /></div>
                         })
                     }
                 </div>

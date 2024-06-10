@@ -27,8 +27,6 @@ export default function ItemDetail() {
                 </div>
             </div>
         </div> */}
-
-
     </>
 }
 
