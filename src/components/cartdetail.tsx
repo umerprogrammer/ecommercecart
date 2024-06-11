@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Delete } from '@mui/icons-material';
 
+
+
+
 export default function CartDetail(props: {
     itemId: number;
     category: string;
@@ -74,7 +77,8 @@ export default function CartDetail(props: {
 
     // calculateItem();
     return <>
-        <div className="row">
+
+        <div className="row mb-2">
             <div className="col-md-12">
                 <div className='rounded-1 px-2 '>
                     <div className='border rounded-1 p-2'>

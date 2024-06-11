@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState} from 'react';
 import axios from 'axios';
 import CartDetail from '../components/cartdetail';
+import React from 'react';
+
+
 
 export default function CartList() {
 
@@ -28,6 +31,7 @@ export default function CartList() {
     }
 
     return <>
+
         <div className="container mt-2">
             <div className="row border">
                 <div className="col-md-12">
@@ -91,5 +95,6 @@ export default function CartList() {
                 </div>
             </div>
             </div>
+
     </>
 }
