@@ -5,6 +5,44 @@
 }
 
 
+.main-menu{
+
+  background-color: #333330;
+  width: 100% !important;
+  height: 500px !important;
+
+}
+.main-menu-img{
+  box-shadow: #ececea;
+}
+
+.btn-shop{
+  font-size: 17px !important;
+  font-weight: bold !important;
+  background-color: #333330 !important;
+  /* color: #FFD507 !important; */
+  color:#967D5C !important;
+  border: 1px solid #FFD507 !important;
+}
+
+.btn-shop:hover{
+  background-color: #FFD507 !important;
+  color: #333330 !important;
+}
+
+/* 
+.main-banner{
+  background-image: url("../src/images/main-banner3.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 500px;
+} */
+
+.main-menu-text{
+  color:#FFD507;
+}
+
 .fs-7{
    font-size: 7px;
 }
@@ -46,4 +84,65 @@
  }
  .fs-20{
   font-size: 20px;
+ }
+
+ .fs-21{
+  font-size: 21px;
+}
+.fs-22{
+ font-size: 22px;
+}
+.fs-23{
+ font-size: 23px;
+}
+.fs-24{
+ font-size: 24px;
+}
+.fs-25{
+ font-size: 25px;
+}
+.fs-26{
+font-size: 26px;
+}
+.fs-27{
+font-size: 27px;
+}
+.fs-28{
+font-size: 28px;
+}
+.fs-29{
+ font-size: 29px;
+}
+.fs-30{
+font-size: 30px;
+}
+.fs-31{
+font-size: 31px;
+}
+.fs-32{
+font-size: 32px;
+}
+.fs-33{
+ font-size: 33px;
+}
+.fs-34{
+ font-size: 34px;
+}
+
+.fs-35{
+  font-size: 40px;
+ }
+ 
+ .fs-36{
+  font-size: 45px;
+ }
+ .fs-37{
+  font-size: 50px;
+ }
+
+ .fs-38{
+  font-size: 55px;
+ }
+ .fs-60{
+  font-size: 60px;
  }

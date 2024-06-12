@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import Badge, { BadgeProps } from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { NavCartCount } from '../App';
+import { Link } from 'react-router-dom';
 
 
 
@@ -11,21 +12,21 @@ export default function ECHeader() {
     
 
     return <>
-        <nav className="navbar navbar-expand-sm navbar-dark bg-dark px-2 sticky-top ">
-            <a className="navbar-brand" href="#">Shops</a>
+        <nav className="navbar navbar-expand-sm navbar-dark bg-transparent text-dark px-2  ">
+            <a className="navbar-brand text-dark" href="#">Shops</a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
-                <ul className="navbar-nav mr-auto">
-                <li className="nav-item">
-                        <a className="nav-link" href="#">Products</a>
+                <ul className="navbar-nav mr-auto ">
+                <li className="nav-item ">
+                        <a className="nav-link text-dark" href="/products">Products</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">Login</a>
+                        <a className="nav-link text-dark" href="#">Login</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">Sign Up</a>
+                        <a className="nav-link text-dark" href="#">Sign Up</a>
                     </li>
                     {/* <li className="nav-item dropdown">
                         <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -39,7 +40,7 @@ export default function ECHeader() {
                         </div>
                     </li> */}
                     <li className="nav-item">
-                        <a className="nav-link" href="#"><Badge color="secondary" badgeContent={cartCount} showZero>
+                        <a className="nav-link text-dark" href="#"><Badge color="secondary" badgeContent={cartCount} showZero>
                             <ShoppingCartIcon />
                         </Badge>
                         </a>
